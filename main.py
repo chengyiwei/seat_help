@@ -14,7 +14,6 @@ import sys
 import easygui as ag
 from random import *
 import pytab as pt
-import pytab as pt
 import  os.path
 
 # -*- coding: utf-8 -*-
@@ -26,6 +25,7 @@ mpl.rcParams['axes.unicode_minus'] = False
 #全局变量定义
 Version = ' v2.0.1'
 Title = '排座位辅助器 ' + Version
+init_ = {}
 
 #主页面
 def main_interface():
@@ -173,8 +173,29 @@ def end_sort():
 #命令行主程序
 def cmd_():
     input_cmd = ag.enterbox("请输入需要的命令",title= Title)
-
-
+    if init_['Administration'] == 0:
+        choice_ = ag.msgbox(msg='您没有相关权限', title= Title, ok_button='返回主界面', image=None, root=None)
+        if choice_ == '返回主界面':
+            main_interface()
+        return
+    
+def read_init():
+    init_['activation'] = 0
+    
+    if not os.path.isfile('.idea\initialization.xml'):
+        return
+    
+    f = open('.idea\initialization.xml','r',encoding='utf-8')
+    line = f.readline()
+    while line:
+        init_[line[0:line.find(' ')]]=line[line.find(' ')+1:]
+        if init_[line[0:line.find(' ')]][-1] == '\n':
+            init_[line[0:line.find(' ')]] = init_[line[0:line.find(' ')]][:-1:]
+        line = f.readline()
+    f.close()
+    
+    print(init_)
+    
 #关于程序主程序
 def about_program():
     show_ = '程序名称：排座位辅助器\n' + '版本号： v2.0.0\n' + '项目简介：需要帮助班级同学们公平的抽到位置，也减小班干部的工作量，和一些同学的特殊需求，特意开发了此项目\n'
@@ -188,5 +209,5 @@ def about_program():
 #主程序
 
 if __name__ == '__main__':
-    print(1)
+    read_init()
     main_interface()

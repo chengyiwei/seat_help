@@ -1,5 +1,5 @@
 # 项目名称: 排座位辅助器
-# 项目版本 2.0.0
+# 项目版本 2.0.2
 # 创建时间 2022/4/23
 # 创建人 Martian148
 # 修改时间 2022/4/25
@@ -46,11 +46,15 @@ def main_interface():
 
 #输入座位及人数信息
 def input_information():
-    input_name = ag.enterbox(msg='输入名单', title='排座位辅助器' + Version, default=' ', strip=True, image=None, root=None)
+    input_name = ag.enterbox(msg='输入名单', title=Title, default=' ', strip=True, image=None, root=None)
+    if input_name is None:
+        main_interface()
     name_ = input_name.split('\n')
     print(name_)
 
-    input_chair = ag.enterbox(msg='输入座位', title='排座位辅助器v0.1' + Version, default=' ', strip=True, image=None, root=None)
+    input_chair = ag.enterbox(msg='输入座位', title=Title, default=' ', strip=True, image=None, root=None)
+    if input_chair is None:
+        main_interface()
     chair_ = input_chair.split('\n')
     print(chair_)
 
@@ -173,15 +177,15 @@ def end_sort():
 #命令行主程序
 def cmd_():
     input_cmd = ag.enterbox("请输入需要的命令",title= Title)
-    if init_['Administration'] == 0:
+    if int(init_['Administration']) == 0:
         choice_ = ag.msgbox(msg='您没有相关权限', title= Title, ok_button='返回主界面', image=None, root=None)
         if choice_ == '返回主界面':
             main_interface()
         return
     
 def read_init():
-    init_['activation'] = 0
-    
+    init_['activation'] = '0'
+    init_['Administration'] = '0'
     if not os.path.isfile('.idea\initialization.xml'):
         return
     
@@ -201,7 +205,7 @@ def about_program():
     show_ = '程序名称：排座位辅助器\n' + '版本号： v2.0.0\n' + '项目简介：需要帮助班级同学们公平的抽到位置，也减小班干部的工作量，和一些同学的特殊需求，特意开发了此项目\n'
     show_ += '版权: @ 衢州二中 Martian148\n' + '说在后面的话：如有什么问题或特殊需求请私找我，本人QQ:1485868106，由于本人的水平有限，使用了简单的esaygui图形化框架，也没用什么算法，也希望各位大佬给我提一些改进的建议\n'
     show_ += '更详细的介绍：https://www.cnblogs.com/Martian148'
-    choice_ = ag.msgbox(msg=show_, title=' ', ok_button='返回主界面', image=None, root=None)
+    choice_ = ag.msgbox(msg=show_, title=Title, ok_button='返回主界面', image=None, root=None)
 
     if choice_ == '返回主界面':
         main_interface()

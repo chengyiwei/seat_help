@@ -87,7 +87,7 @@ def read_file(row,col):
     if not os.path.isfile('.idea\define_t.xml'):
         return near,set_
 
-    f = open('.idea\define_t.xml','r',encoding='utf-8')
+    f = open('.idea\define_t.xml','r',encoding='utf-8-sig')
     requirements_ = f.readlines()
     f.close()
 
